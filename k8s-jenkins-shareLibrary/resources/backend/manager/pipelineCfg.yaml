@@ -1,0 +1,44 @@
+archives_env: pre
+branch: master
+build_cmd: mvn package -e -U  -Dmaven.test.skip=true
+desc: 后台服务
+env:
+  - dev
+  - k8s
+  - test
+  - pre
+  - prod
+  - uat
+install_cmd: yarn
+name: manager
+outpath: start/target/start-*.jar
+config: application.yml
+repository_url: http://gitlab.git.com/scm-backend/backend-manager.git
+type: maven
+playbookPath: '/data/deploy/playbook'
+pipelineType: 'k8s'
+jvm_opt:
+  - prod: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+    uat: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+    k8s: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+    dev: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+
+k8sDeployment:
+  default:
+    namespace: scm-dev
+    replicas: 1
+    resources:
+      requests:
+        cpu: 400m
+        memory: 2048Mi
+      limits:
+        cpu: 400m
+        memory: 2048Mi
+
+  services:
+    - name: be-data-scm-backend-manager
+      image: 'reg.git.com/data/be-data-scm-backend-manager:20221028175439_7'
+      host: www.test.com
+      ports:
+        - port: 8080
+          type: application

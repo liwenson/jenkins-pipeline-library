@@ -1,0 +1,56 @@
+branch: master
+desc: ''
+build_cmd: |
+  mvn clean package -P${ENVIR} -Dmaven.test.skip=true
+install_cmd: |
+  yarn
+git_credentials_id: 'ops'
+playbookPath: '/data/deploy/playbook'
+port: 22
+backup_dir: '/data/back'
+archives_env: pre
+env: ['dev', 'qa', 'pre']
+minio_url: 'http://10.200.192.26:9000/'
+minio_bucket: jenkins
+minio_credentialsId: minio
+debug: 'true'
+fe_delete: 'true'
+config: 'global.config'
+isconfig: 'true'
+java_ver: 'jdk1.8'
+node_ver: 'v16.17.0'
+mvn_ver: 'maven3.5'
+# mvn_build_img: 'maven:3.5.0-alpine'
+mvn_build_img: 'my-build:0.1'
+node_build_img: ['node:14.20-alpine315', 'node:16.9-alpine315']
+# isdocker: 'true'
+registryUrl: 'reg.dockerimages.com'
+
+# pipelineType: 'docker' # k8s ,image ,docker ,basic
+pipelineType: 'k8s'
+jvm_opt:
+  - prod: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+    uat: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+    k8s: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+    dev: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+# jvm_opt: '-Xdebug -Xnoagent -Xms256m -Xmx1024m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8'
+
+k8sDeployment:
+  default:
+    namespace: scm-dev
+    replicas: 1
+    resources:
+      requests:
+        cpu: 400m
+        memory: 2048Mi
+      limits:
+        cpu: 400m
+        memory: 2048Mi
+
+  services:
+    - name: be-data-scm-backend-manager
+      image: 'reg.docker.com/data/be-data-scm-backend-manager:20221028175439_7'
+      host: www.test.com
+      ports:
+        - port: 8080
+          type: application

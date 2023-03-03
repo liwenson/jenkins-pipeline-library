@@ -1,0 +1,13 @@
+type: maven
+desc: '服务'
+name: test
+outpath: 'data-service/target/out/*.jar'
+repository_url: http://gitlab.git.com/test123/test123-parent.git
+branch: master
+build_cmd: |
+  mvn clean package -P${ENVIR} -Dmaven.test.skip=true
+git_credentials_id: ops
+port: 9004
+backup_dir: '/data/back'
+archives_env: pre
+env: ['dev', 'qa', 'pre']
