@@ -1,0 +1,24 @@
+archives_env: pre
+build_cmd: | 
+  mvn package -Dmaven.test.skip=true
+desc: 履约金匮服务
+option:
+  dev:
+    pipelineType: 'docker'  # k8s ,image ,docker ,basic
+    jvm: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+  test:
+    pipelineType: 'k8s'  # k8s ,image ,docker ,basic
+    jvm: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+  pet:
+    pipelineType: 'image'  # k8s ,image ,docker ,basic
+    jvm: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+  test02:
+    pipelineType: 'basic'  # k8s ,image ,docker ,basic
+    jvm: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+
+outputDirectory: start/target/start-*.jar
+config: application.yml
+repository_url: http://gitlab.test.com/scm-ofc/ofc-gc.git
+repository_branch: master
+build_type: maven
+playbookPath: '/data/deploy/playbook'

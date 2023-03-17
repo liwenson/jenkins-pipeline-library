@@ -11,7 +11,6 @@ def param(config) {
         choice(name: 'ENVIR', choices: config.info.envir, description: '环境'),
         string(name: 'Version', defaultValue:'' , description: '版本信息', trim: true),
         text(name: 'CMD', defaultValue: config.info.build_cmd, description: '编译命令')
-
         ])
     ])
   }else if ( config.info.pipelineType == 'k8s') {
@@ -47,12 +46,5 @@ def param(config) {
         text(name: 'BUILDCMD', defaultValue: config.info.build_cmd, description: '编译命令')
       ])
     ])
-  }
-}
-
-def build(config) {
-  if ( config.info.type == 'maven') {
-  }
-  else {
   }
 }

@@ -1,0 +1,18 @@
+archives_env: prod
+branch: master
+build_cmd: yarn build:${ENVIR}
+desc: 零配件
+env:
+  - dev
+  - test
+  - pet
+  - pre
+  - prod
+group: ''
+node_ver: 'v14.20.0'
+install_cmd: yarn
+name: sp
+outpath: dist
+project: sp
+repository_url: http://gitlab.test.com/data-spareparts/data-spareparts-web.git
+type: node

@@ -1,0 +1,32 @@
+branch: master
+desc: ''
+build_cmd: |
+  mvn clean package -P${ENVIR} -Dmaven.test.skip=true
+install_cmd: |
+  yarn
+git_credentialsId: 'ops'
+ssh_credentialsId: 'skey'
+playbookPath: '/data/deploy/playbook'
+inventory: '/data/deploy/playbook/inventory'
+docker_registry: 'reg.test.com'
+npm_registry: 'http://npm.test.com'
+port: 22
+backup_dir: '/data/back'
+archives_env: pre
+envir: ['dev', 'test', 'pet', 'pre', 'prod']
+minio_url: 'http://10.200.192.26:9000/'
+minio_bucket: jenkins
+minio_credentialsId: minio
+debug: 'false'
+isconfig: 'true'
+java_ver: 'jdk1.8'
+node_versions: ['v14.20.0','v16.17.0']
+option:
+  dev:
+    pipelineType: 'docker'  # k8s ,image ,docker ,basic
+    jvm: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
+# mvn_build_img: 'maven:3.5.0-alpine'
+# mvn_build_img: 'my-build:0.1'
+# node_build_img: ['node:14.20-alpine315', 'node:16.9-alpine315']
+# pipelineType: 'docker' # k8s ,image ,docker ,basic
+pipelineType: 'docker'

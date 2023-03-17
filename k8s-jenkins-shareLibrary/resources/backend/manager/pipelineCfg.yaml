@@ -16,7 +16,9 @@ config: application.yml
 repository_url: http://gitlab.git.com/scm-backend/backend-manager.git
 type: maven
 playbookPath: '/data/deploy/playbook'
+
 pipelineType: 'k8s'
+
 jvm_opt:
   - prod: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
     uat: '-Xdebug -Xnoagent -Xms2048m -Xmx2048m -Duser.timezone=GMT+08 -Dfile.encoding=UTF-8 -XX:NewRatio=1 -XX:SurvivorRatio=8 -Dspring.config.location=config/application.yml'
